@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ed. Alzira</title>
+<meta name="theme-color" content="#7a1f2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Ed. Alzira">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  html,body{margin:0;height:100%;background:#7a1f2e;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#f8f4f3}
+  #dica{position:fixed;left:12px;right:12px;bottom:12px;background:#fff;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.25);padding:14px 16px;font-size:15px;color:#1b1f23;display:none;z-index:9}
+  #dica b{color:#7a1f2e}#dica button{float:right;border:0;background:none;font-size:22px;line-height:1;color:#5b6670;cursor:pointer}
+  #instalar{position:fixed;left:12px;right:12px;bottom:12px;display:none;z-index:9;border:0;border-radius:14px;padding:15px;font:inherit;font-weight:700;font-size:16px;background:#fff;color:#7a1f2e;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+</style>
+</head>
+<body>
+<iframe src="https://script.google.com/macros/s/AKfycbzpqyPYwzYNZ_Kk9EKpB1Iutsm9URIusnczao3Yy2r8A8bkcpAhEfBbU_mN3YhXJfgSOg/exec" title="Ed. Alzira" allow="camera; clipboard-write"></iframe>
+<div id="dica"><button onclick="fechar()" aria-label="Fechar">×</button><b>Instale o app Ed. Alzira</b><br>No iPhone: toque em <b>Compartilhar</b> (o quadrado com a seta) e depois em <b>Adicionar à Tela de Início</b>.</div>
+<button id="instalar">📲 Instalar o app Ed. Alzira</button>
+<script>
+  var standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  var ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  function fechar(){ document.getElementById('dica').style.display='none'; try{localStorage.setItem('dicaFechada','1')}catch(e){} }
+  if (ios && !standalone) { var f=''; try{f=localStorage.getItem('dicaFechada')}catch(e){} if(!f) document.getElementById('dica').style.display='block'; }
+  var pedido; window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); pedido=e; var b=document.getElementById('instalar'); b.style.display='block'; b.onclick=function(){ b.style.display='none'; pedido.prompt(); }; });
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+</script>
+</body>
+</html>
